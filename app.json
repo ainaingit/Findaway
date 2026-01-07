@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "side_project",
-    "slug": "side_project",
+    "name": "Findaway",
+    "slug": "Findaway",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "sideproject",
+    "scheme": "findaway",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -38,8 +38,7 @@
             "backgroundColor": "#000000"
           }
         }
-      ],
-      "expo-maps"
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
