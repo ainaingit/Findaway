@@ -1,38 +1,40 @@
-import { useEffect } from 'react';
-import { Text, View, ActivityIndicator, StyleSheet } from 'react-native';
-import { useAuth } from '../auth/AuthContext';
+import { useEffect } from 'react'
+import { Text, View, ActivityIndicator, StyleSheet } from 'react-native'
+import { useAuth } from '../auth/AuthContext'
 
 export default function Index() {
-  const { user, role, username, loading } = useAuth();
+  const { user, loading } = useAuth()
 
+  // Log session info once when user is available
   useEffect(() => {
     if (!loading && user) {
-      console.log('Session existe ✅', {
+      console.log('Session exists:', {
         userId: user.id,
-        role,
-        username,
-      });
+        email: user.email,
+      })
     }
-  }, [loading, user, role, username]);
+  }, [loading, user])
 
+  // Show loader while auth state is restoring
   if (loading) {
     return (
       <View style={styles.centered}>
         <ActivityIndicator size="large" />
         <Text style={{ marginTop: 10 }}>Checking session...</Text>
       </View>
-    );
+    )
   }
 
+  // Show simple status for now (can later redirect or render real content)
   return (
     <View style={styles.centered}>
       {user ? (
-        <Text style={styles.text}>Session active </Text>
+        <Text style={styles.text}>Session active</Text>
       ) : (
-        <Text style={styles.text}>No session </Text>
+        <Text style={styles.text}>No session</Text>
       )}
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -44,4 +46,4 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
   },
-});
+})
