@@ -10,7 +10,7 @@ export default function Index() {
     if (!loading && user) {
       console.log('Session exists:', {
         userId: user.id,
-        email: user.email,
+        email: user.email,  
       })
     }
   }, [loading, user])
