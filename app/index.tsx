@@ -1,40 +1,44 @@
-import { useEffect } from 'react'
-import { Text, View, ActivityIndicator, StyleSheet } from 'react-native'
-import { useAuth } from '../auth/AuthContext'
+import { useEffect } from 'react';
+import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import { useAuth } from '../auth/AuthContext';
+import { useRouter } from 'expo-router';
 
 export default function Index() {
-  const { user, loading } = useAuth()
+  const { user, loading } = useAuth();
+  const router = useRouter();
 
-  // Log session info once when user is available
   useEffect(() => {
-    if (!loading && user) {
-      console.log('Session exists:', {
-        userId: user.id,
-        email: user.email,  
-      })
+    if (!loading) {
+      if (user) {
+        console.log('Session exists:', {
+          userId: user.id,
+          email: user.email,
+        });
+        // Optionally redirect logged-in users somewhere else
+        // router.replace('/home'); 
+      } else {
+        // No session → redirect to welcome screen
+        router.replace('/auth-screen');
+      }
     }
-  }, [loading, user])
+  }, [loading, user]);
 
-  // Show loader while auth state is restoring
   if (loading) {
     return (
       <View style={styles.centered}>
         <ActivityIndicator size="large" />
         <Text style={{ marginTop: 10 }}>Checking session...</Text>
       </View>
-    )
+    );
   }
 
-  // Show simple status for now (can later redirect or render real content)
+  // While the redirect happens, just show a loader
   return (
     <View style={styles.centered}>
-      {user ? (
-        <Text style={styles.text}>Session active</Text>
-      ) : (
-        <Text style={styles.text}>No session</Text>
-      )}
+      <ActivityIndicator size="large" />
+      <Text style={{ marginTop: 10 }}>Redirecting...</Text>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -43,7 +47,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  text: {
-    fontSize: 16,
-  },
-})
+});
